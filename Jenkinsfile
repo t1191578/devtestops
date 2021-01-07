@@ -1,32 +1,24 @@
 pipeline {
     agent any
-
-    stages {
-        stage ('Compile Stage') {
-
-            steps {
-                withMaven(maven : 'maven') {
-                    sh 'mvn compile'
-                }
+    environment {
+        PATH = "/usr/share/maven/bin:$PATH"
+    }
+ 
+        stage("build code"){
+            steps{
+              sh "mvn clean install"
             }
         }
-
-        stage ('Testing Stage') {
-
-            steps {
-                withMaven(maven : 'maven') {
-                    sh 'mvn test'
-                }
+        stage("Test"){
+            steps{
+              sh "mvn test"
             }
         }
-
-
-        stage ('Deployment Stage') {
-            steps {
-                withMaven(maven : 'maven') {
-                    sh 'mvn package'
-                }
+        stage("Package"){
+            steps{
+              sh "mvn package"
             }
         }
+        
     }
 }
