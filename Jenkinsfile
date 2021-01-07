@@ -3,7 +3,12 @@ pipeline {
     environment {
         PATH = "/usr/share/maven/bin:$PATH"
     }
- 
+    stages {
+        stage("clone code"){
+            steps{
+               git  url: 'https://github.com/t1191578/devtestops.git'
+            }
+        }
         stage("build code"){
             steps{
               sh "mvn clean install"
